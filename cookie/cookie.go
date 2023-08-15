@@ -18,6 +18,7 @@ func SetXyCookie(c *gin.Context) {
 	log.Printf("获取cookie：%s", cookie)
 	if err != nil {
 		cookieKey := "xy-cookie"
+		//todo :后期可以替换成全局sessionID
 		cookieValue := RandStringBytes(6)
 		//todo 设置cookie访问域名
 		c.SetCookie(cookieKey, cookieValue, 3600, "/", "localhost", false, true)
