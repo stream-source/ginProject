@@ -24,18 +24,20 @@ func Controller(engine *gin.Engine) {
 func SetXySession(c *gin.Context) {
 	//初始化session对象
 	session := sessions.Default(c)
-
+	//key\value:随意指定，无协议约束
+	sessionKey := "xy-session"
+	sessionValue := "xySession"
 	//如果浏览器第一次发送请求，则提示未授权403，否则授权成功200
-	user := session.Get("user")
+	user := session.Get(sessionKey)
 	log.Printf("get session: %s", user)
 	if user == "" || user == nil {
 		//设置session
-		session.Set("user", "xySession")
+		session.Set("session", sessionValue)
 		session.Save()
 		//第一次未携带session，禁止访问
 		panic(result.FORBIDDEN)
 	}
-	if user != "xySession" {
+	if user != sessionValue {
 		//携带session，但非法
 		panic(result.UNAUTHORIZED)
 	} else {
