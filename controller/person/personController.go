@@ -3,6 +3,7 @@ package person
 import (
 	"ginProject/database"
 	"ginProject/model"
+	"ginProject/result"
 	"github.com/gin-gonic/gin"
 	"log"
 )
@@ -31,6 +32,9 @@ func CreatePerson(c *gin.Context) {
 	var person model.Person
 	if err := c.ShouldBindJSON(&person); err != nil {
 		log.Panicln("解析json格式错误")
+	}
+	if person.Sex == "" || person.Sex == "nil" {
+		panic(result.SEX_IS_NULL)
 	}
 	log.Printf("入库数据为，姓名：%s, 邮箱：%s\n", person.Username, person.Email)
 	log.Printf("原始数据内存地址：%p\n", &person)
