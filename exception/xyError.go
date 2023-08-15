@@ -17,6 +17,7 @@ func (err BaseError) Error() string {
 	return fmt.Sprintf("code:%s,request：%s, msg:%s", err.Code, err.Request, err.Msg)
 }
 
+// ToDo 错误时间需要优化
 func DefineBaseError(code string, request string, msg string) error {
 	return BaseError{
 		Code:      code,

@@ -21,6 +21,7 @@ import (
 
 // 使用自定义错误异常处理
 var (
+	//ToDo 优化成功状态response，非baseError
 	OK           = exception.DefineBaseError(SUCCESS_CODE, "", "ok")
 	FAIL         = exception.DefineBaseError(FAIL_CODE, "", "fail")
 	SEX_IS_NULL  = exception.DefineBaseError("20101", "", "sex不能为空")
