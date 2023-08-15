@@ -18,6 +18,7 @@ func Controller(engine *gin.Engine) {
 	session := engine.Group("/session")
 	{
 		session.GET("/get-session", SetXySession)
+		session.GET("/global-session", globalSessionId)
 	}
 }
 
@@ -44,4 +45,12 @@ func SetXySession(c *gin.Context) {
 		c.JSON(http.StatusOK, result.OK)
 	}
 
+}
+
+func globalSessionId(c *gin.Context) {
+	request := c.Request
+	responseWriter := c.Writer
+	session := GlobalSessions.SessionStart(responseWriter, request)
+	id := session.SessionID()
+	log.Printf("session id:%s", id)
 }
