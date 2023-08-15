@@ -1,11 +1,11 @@
 package handler
 
 import (
+	"ginProject/exception"
 	"ginProject/result"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
-	"runtime/debug"
 )
 
 // TokenHandler gin中间件，类似Java拦截器AOP
@@ -24,15 +24,20 @@ func TokenHandler() gin.HandlerFunc {
 
 // Recover 定义统一异常处理
 func Recover(context *gin.Context) {
+	//url := context.Request.URL.String()
 	defer func() {
 		if err := recover(); err != nil {
 			// 异常日志
-			log.Printf("出现异常: %v\n", err)
+			log.Printf("异常信息: %v\n", err)
 			// 打印错误堆栈信息
-			debug.PrintStack()
+			//debug.PrintStack()
+			//判断异常类型
+			switch err.(type) {
 			// 返回统一的Json风格
-			//todo 判断异常类型
-			context.JSON(http.StatusOK, result.FAIL.BuildMsg(err.(string), context.Request.URL.String()))
+			case exception.BaseError:
+				baseError := err.(exception.BaseError).GetBaseError()
+				context.JSON(http.StatusBadRequest, result.ErrorResponse(http.StatusBadRequest, &baseError))
+			}
 			//终止后续操作
 			context.Abort()
 		}
