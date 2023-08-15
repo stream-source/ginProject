@@ -3,8 +3,10 @@ package main
 import (
 	"ginProject/controller/person"
 	"ginProject/controller/user"
+	"ginProject/cookie"
 	"ginProject/database"
 	"ginProject/handler"
+	"ginProject/session"
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,6 +22,8 @@ func main() {
 	user.Controller(engine)
 	//人相关路由
 	person.Controller(engine)
+	cookie.Controller(engine)  //客户端访问cookie
+	session.Controller(engine) //访问session
 	engine.Run(":8083")
 }
 
