@@ -21,9 +21,11 @@ import (
 
 // 使用自定义错误异常处理
 var (
-	OK          = exception.DefineBaseError(SUCCESS_CODE, "", "ok")
-	FAIL        = exception.DefineBaseError(FAIL_CODE, "", "fail")
-	SEX_IS_NULL = exception.DefineBaseError("20101", "", "sex不能为空")
+	OK           = exception.DefineBaseError(SUCCESS_CODE, "", "ok")
+	FAIL         = exception.DefineBaseError(FAIL_CODE, "", "fail")
+	SEX_IS_NULL  = exception.DefineBaseError("20101", "", "sex不能为空")
+	UNAUTHORIZED = exception.DefineBaseError("401", "", "未授权")
+	FORBIDDEN    = exception.DefineBaseError("403", "", "无权限禁止访问")
 )
 
 // 定义全局常量
