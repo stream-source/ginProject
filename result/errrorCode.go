@@ -1,6 +1,8 @@
 package result
 
-import "net/http"
+import (
+	"ginProject/exception"
+)
 
 // 错误码规则:
 // (1) 错误码需为 > 0 的数;
@@ -12,9 +14,16 @@ import "net/http"
 //	----------------------------------------------------------
 //	  服务级错误码          模块级错误码	         具体错误码
 //	----------------------------------------------------------
+//var (
+//	OK   = BusinessResponse(http.StatusOK, SUCCESS_CODE, "ok")
+//	FAIL = BusinessResponse(http.StatusInternalServerError, FAIL_CODE, "fail")
+//)
+
+// 使用自定义错误异常处理
 var (
-	OK   = BusinessResponse(http.StatusOK, SUCCESS_CODE, "ok")
-	FAIL = BusinessResponse(http.StatusInternalServerError, FAIL_CODE, "fail")
+	OK          = exception.DefineBaseError(SUCCESS_CODE, "", "ok")
+	FAIL        = exception.DefineBaseError(FAIL_CODE, "", "fail")
+	SEX_IS_NULL = exception.DefineBaseError("20101", "", "sex不能为空")
 )
 
 // 定义全局常量

@@ -1,5 +1,7 @@
 package result
 
+import "ginProject/exception"
+
 /**
 统一定义返回格式
 {
@@ -53,4 +55,9 @@ func (response *Response) BuildData(data interface{}, request string) Response {
 		Request:   request,
 		Data:      data,
 	}
+}
+
+// ToDo 结合错误码统一封装response，控制外部访问入口
+func ErrorResponse(code int, baseError *exception.BaseError) *Response {
+	return response(code, baseError.Code, baseError.Msg, baseError.Request)
 }
