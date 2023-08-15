@@ -11,7 +11,16 @@ import (
 )
 
 func init() {
+	//初始化数据库连接
 	database.DB = database.InitDB()
+	//先注册session
+	customProvider := &session.CustomProvider{
+		Sessions: make(map[string]session.Session),
+	}
+	session.Register("memory", customProvider)
+	//初始化session
+	session.GlobalSessions, _ = session.NewManager("memory", "goSessionId", 3600)
+
 }
 
 func main() {
